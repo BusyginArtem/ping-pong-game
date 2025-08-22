@@ -4,3 +4,4 @@
 npx lint-staged
 
 # Add test command here
+# npm test
