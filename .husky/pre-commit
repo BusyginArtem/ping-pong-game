@@ -1,7 +1,4 @@
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
-
 npx lint-staged
 
-# Add test command here
-# npm test
+# Run tests
+npm test
