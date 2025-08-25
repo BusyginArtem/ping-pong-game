@@ -1,0 +1,47 @@
+import { COLORS, CANVAS_WIDTH, CANVAS_HEIGHT } from '@/shared/constants';
+import type { Ball, Paddle } from '../types';
+
+export const drawCenterLine = (ctx: CanvasRenderingContext2D) => {
+  ctx.strokeStyle = COLORS.ball;
+  ctx.setLineDash([5, 5]);
+  ctx.beginPath();
+  ctx.moveTo(CANVAS_WIDTH / 2, 0);
+  ctx.lineTo(CANVAS_WIDTH / 2, CANVAS_HEIGHT);
+  ctx.stroke();
+  ctx.setLineDash([]);
+};
+
+export const drawBall = (ctx: CanvasRenderingContext2D, ball: Ball) => {
+  ctx.fillStyle = COLORS.ball;
+  ctx.beginPath();
+  ctx.arc(ball.position.x, ball.position.y, ball.radius, 0, Math.PI * 2);
+  ctx.fill();
+};
+
+export const drawBallTrail = (ctx: CanvasRenderingContext2D, ball: Ball) => {
+  ball.trails.forEach(({ position }, index) => {
+    const opacity = 1 - index / ball.trails.length;
+    const radius = ball.radius * (1 - (index / ball.trails.length) * 0.5);
+
+    ctx.fillStyle = `rgba(255, 255, 255, ${opacity * 0.3})`;
+    ctx.globalAlpha = opacity * 0.6;
+    ctx.beginPath();
+    ctx.arc(position.x, position.y, radius, 0, Math.PI * 2);
+    ctx.fill();
+  });
+  ctx.globalAlpha = 1;
+};
+
+export const drawPaddle = (ctx: CanvasRenderingContext2D, paddle: Paddle) => {
+  ctx.fillStyle = COLORS.ball;
+  ctx.fillRect(paddle.position.x, paddle.position.y, paddle.width, paddle.height);
+};
+
+export const drawScore = (ctx: CanvasRenderingContext2D, leftScore: number, rightScore: number) => {
+  ctx.fillStyle = COLORS.text;
+  ctx.font = '48px Arial';
+  ctx.textAlign = 'center';
+
+  ctx.fillText(leftScore.toString(), CANVAS_WIDTH / 4, 60);
+  ctx.fillText(rightScore.toString(), (CANVAS_WIDTH * 3) / 4, 60);
+};

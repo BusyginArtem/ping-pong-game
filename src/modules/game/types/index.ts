@@ -45,13 +45,14 @@ export const Difficulty = {
   HARD: 'hard' as Difficulty,
 };
 
-export type GameState = 'menu' | 'playing' | 'paused' | 'reset';
+export type GameState = 'menu' | 'playing' | 'paused' | 'reset' | 'idle';
 
 export const GameState = {
   MENU: 'menu' as GameState,
   PLAYING: 'playing' as GameState,
   PAUSED: 'paused' as GameState,
   RESET: 'reset' as GameState,
+  IDLE: 'idle' as GameState,
 };
 
 export interface Controls {

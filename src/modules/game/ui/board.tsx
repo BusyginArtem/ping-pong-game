@@ -1,49 +1,36 @@
 import { useEffect, useRef } from 'react';
 
 import { CANVAS_HEIGHT, CANVAS_WIDTH, COLORS } from '@/shared/constants';
-import type { Ball, Paddle } from '../types';
+import { GameState } from '../types';
 import { useGameStore } from '../store/useGameStore';
+import { useGameLoop } from '../hooks/useGameLoop';
+import { useGameLogic } from '../hooks/useGameLogic';
+import { drawCenterLine, drawScore, drawBallTrail, drawBall, drawPaddle } from '../core';
+import { cn } from '@/shared/utils/styling';
 
-const drawCenterLine = (ctx: CanvasRenderingContext2D) => {
-  ctx.strokeStyle = COLORS.ball;
-  ctx.setLineDash([5, 5]);
-  ctx.beginPath();
-  ctx.moveTo(CANVAS_WIDTH / 2, 0);
-  ctx.lineTo(CANVAS_WIDTH / 2, CANVAS_HEIGHT);
-  ctx.stroke();
-  ctx.setLineDash([]);
-};
-
-const drawBall = (ctx: CanvasRenderingContext2D, ball: Ball) => {
-  ctx.fillStyle = COLORS.ball;
-  ctx.beginPath();
-  ctx.arc(ball.position.x, ball.position.y, ball.radius, 0, Math.PI * 2);
-  ctx.fill();
-};
-
-const drawBallTrail = (ctx: CanvasRenderingContext2D, ball: Ball) => {
-  ball.trails.forEach(({ position }, index) => {
-    const opacity = 1 - index / ball.trails.length;
-    const radius = ball.radius * (1 - (index / ball.trails.length) * 0.5);
-
-    ctx.fillStyle = `rgba(255, 255, 255, ${opacity * 0.3})`;
-    ctx.globalAlpha = opacity * 0.6;
-    ctx.beginPath();
-    ctx.arc(position.x, position.y, radius, 0, Math.PI * 2);
-    ctx.fill();
-  });
-  ctx.globalAlpha = 1;
-};
-
-const drawPaddle = (ctx: CanvasRenderingContext2D, paddle: Paddle) => {
-  ctx.fillStyle = COLORS.ball;
-  ctx.fillRect(paddle.position.x, paddle.position.y, paddle.width, paddle.height);
-};
+import StartGameModal from './start-game-modal';
+import GameOverModal from './game-over-modal';
 
 export default function Board() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const { ball, playerLeftPaddle, playerRightPaddle } = useGameStore();
+  const {
+    gameState,
+    ball,
+    playerLeftPaddle,
+    playerRightPaddle,
+    score,
+    playerNames,
+    setGameState,
+    setPlayerNames,
+    resetGame,
+  } = useGameStore();
+  const { updateGame } = useGameLogic();
+
+  useGameLoop({
+    gameState,
+    onUpdate: updateGame,
+  });
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -56,26 +43,44 @@ export default function Board() {
     ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
     drawCenterLine(ctx);
-
+    drawScore(ctx, score.playerLeft, score.playerRight);
     drawBallTrail(ctx, ball);
-
     drawBall(ctx, ball);
-
     drawPaddle(ctx, playerLeftPaddle);
     drawPaddle(ctx, playerRightPaddle);
-  }, [ball, playerLeftPaddle, playerRightPaddle]);
+  }, [ball, playerLeftPaddle, playerRightPaddle, score]);
+
+  const handleStartGame = (playerLeftName: string, playerRightName: string) => {
+    setPlayerNames(playerLeftName, playerRightName);
+    setGameState(GameState.PLAYING);
+  };
 
   return (
-    <canvas
-      ref={canvasRef}
-      width={CANVAS_WIDTH}
-      height={CANVAS_HEIGHT}
-      className={`border-2 border-gray-300 rounded-lg bg-gray-800`}
-      style={{
-        width: '100%',
-        maxWidth: `${CANVAS_WIDTH}px`,
-        height: 'auto',
-      }}
-    />
+    <div className="relative">
+      <canvas
+        ref={canvasRef}
+        width={CANVAS_WIDTH}
+        height={CANVAS_HEIGHT}
+        className={cn(
+          'relative z-10 border-2 border-gray-600/50 rounded-lg bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 shadow-inner transition-all duration-300',
+          { 'shadow-blue-500/20 shadow-lg': gameState === GameState.PLAYING }
+        )}
+        style={{
+          width: '100%',
+          maxWidth: `${CANVAS_WIDTH}px`,
+          height: 'auto',
+          imageRendering: 'pixelated',
+          filter: gameState === GameState.PAUSED ? 'brightness(0.7) blur(1px)' : 'brightness(1)',
+        }}
+      />
+
+      <StartGameModal
+        isOpen={gameState === GameState.MENU && !playerNames.playerLeft}
+        onStartGame={handleStartGame}
+        onCancel={() => setGameState(GameState.IDLE)}
+      />
+
+      <GameOverModal isOpen={gameState === GameState.IDLE} onNewGame={resetGame} />
+    </div>
   );
 }
