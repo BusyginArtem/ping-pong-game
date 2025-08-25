@@ -1,54 +1,43 @@
-import { useEffect, useRef } from 'react';
-
-import { CANVAS_HEIGHT, CANVAS_WIDTH, COLORS } from '@/shared/constants';
 import { GameState } from '../types';
-import { useGameStore } from '../store/useGameStore';
-import { useGameLoop } from '../hooks/useGameLoop';
-import { useGameLogic } from '../hooks/useGameLogic';
-import { drawCenterLine, drawScore, drawBallTrail, drawBall, drawPaddle } from '../core';
-import { cn } from '@/shared/utils/styling';
+import { useGameActions, useGamePlayerNames, useGameState } from '../store/useGameStore';
+import { useKeyboard } from '../hooks/useKeyboard';
 
 import StartGameModal from './start-game-modal';
 import GameOverModal from './game-over-modal';
+import Field from './field';
 
 export default function Board() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const gameState = useGameState();
+  const playerNames = useGamePlayerNames();
+  const { setGameState, updateControls, resetGame, setPlayerNames } = useGameActions();
 
-  const {
-    gameState,
-    ball,
-    playerLeftPaddle,
-    playerRightPaddle,
-    score,
-    playerNames,
-    setGameState,
-    setPlayerNames,
-    resetGame,
-  } = useGameStore();
-  const { updateGame } = useGameLogic();
+  const isPlaying = gameState === GameState.PLAYING;
+  const hasPlayerNames = playerNames.playerLeft && playerNames.playerRight;
 
-  useGameLoop({
-    gameState,
-    onUpdate: updateGame,
+  useKeyboard({
+    onUpdateControls: (newControls) => {
+      updateControls(newControls);
+    },
+    onPause: () => {
+      if (isPlaying) {
+        setGameState(GameState.PAUSED);
+        updateControls({
+          playerLeftUp: false,
+          playerLeftDown: false,
+          playerRightUp: false,
+          playerRightDown: false,
+        });
+      }
+    },
+    onRestart: () => {
+      if (hasPlayerNames) {
+        resetGame();
+      } else {
+        setGameState(GameState.MENU);
+      }
+    },
+    isGameActive: isPlaying,
   });
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    ctx.fillStyle = COLORS.background;
-    ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-
-    drawCenterLine(ctx);
-    drawScore(ctx, score.playerLeft, score.playerRight);
-    drawBallTrail(ctx, ball);
-    drawBall(ctx, ball);
-    drawPaddle(ctx, playerLeftPaddle);
-    drawPaddle(ctx, playerRightPaddle);
-  }, [ball, playerLeftPaddle, playerRightPaddle, score]);
 
   const handleStartGame = (playerLeftName: string, playerRightName: string) => {
     setPlayerNames(playerLeftName, playerRightName);
@@ -57,22 +46,7 @@ export default function Board() {
 
   return (
     <div className="relative">
-      <canvas
-        ref={canvasRef}
-        width={CANVAS_WIDTH}
-        height={CANVAS_HEIGHT}
-        className={cn(
-          'relative z-10 border-2 border-gray-600/50 rounded-lg bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 shadow-inner transition-all duration-300',
-          { 'shadow-blue-500/20 shadow-lg': gameState === GameState.PLAYING }
-        )}
-        style={{
-          width: '100%',
-          maxWidth: `${CANVAS_WIDTH}px`,
-          height: 'auto',
-          imageRendering: 'pixelated',
-          filter: gameState === GameState.PAUSED ? 'brightness(0.7) blur(1px)' : 'brightness(1)',
-        }}
-      />
+      <Field />
 
       <StartGameModal
         isOpen={gameState === GameState.MENU && !playerNames.playerLeft}

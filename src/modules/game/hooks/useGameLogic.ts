@@ -1,5 +1,15 @@
+import {
+  useGameBall,
+  useGameControls,
+  useGameDifficulty,
+  useGamePlayerLeftPaddle,
+  useGamePlayerNames,
+  useGamePlayerRightPaddle,
+  useGameScore,
+  useGameState,
+} from './../store/useGameStore';
 import { useCallback, useEffect, useRef } from 'react';
-import { useGameStore } from '../store/useGameStore';
+import { useGameActions, useGameStore } from '../store/useGameStore';
 import { GameEngine } from '../core';
 import { GameState } from '../types';
 import { useLeaderBoard } from './useLeaderBoard';
@@ -10,20 +20,15 @@ export const useGameLogic = () => {
   const gameEngineRef = useRef(new GameEngine());
   const { onSaveLeaderboard } = useLeaderBoard();
 
-  const {
-    gameState,
-    difficulty,
-    ball,
-    playerLeftPaddle,
-    playerRightPaddle,
-    score,
-    controls,
-    playerNames,
-    setGameState,
-    updateScore,
-    updateControls,
-    setWinner,
-  } = useGameStore();
+  const difficulty = useGameDifficulty();
+  const gameState = useGameState();
+  const playerNames = useGamePlayerNames();
+  const controls = useGameControls();
+  const score = useGameScore();
+  const playerLeftPaddle = useGamePlayerLeftPaddle();
+  const playerRightPaddle = useGamePlayerRightPaddle();
+  const ball = useGameBall();
+  const { setGameState, updateControls, updateScore, setWinner } = useGameActions();
 
   // Game update function that runs every frame
   const updateGame = useCallback(() => {
@@ -94,26 +99,26 @@ export const useGameLogic = () => {
         });
 
         setTimeout(() => {
-          setGameState(GameState.MENU);
-        }, 100);
+          setGameState(GameState.IDLE);
+        }, 500);
       }
     }
   }, [
-    gameState,
-    playerLeftPaddle,
-    playerRightPaddle,
-    controls,
     ball,
+    controls,
     difficulty,
-    updateScore,
-    score.playerLeft,
-    score.playerRight,
-    setWinner,
+    gameState,
+    onSaveLeaderboard,
+    playerLeftPaddle,
     playerNames.playerLeft,
     playerNames.playerRight,
-    onSaveLeaderboard,
+    playerRightPaddle,
+    score.playerLeft,
+    score.playerRight,
     setGameState,
+    setWinner,
     updateControls,
+    updateScore,
   ]);
 
   // Reset game when needed

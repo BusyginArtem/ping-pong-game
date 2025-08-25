@@ -8,15 +8,17 @@ export const BALL_RADIUS = 8;
 export const PADDLE_SPEED = 5;
 export const WINNING_SCORE = 5;
 
+export const DIFFICULTY_LEVELS: Difficulty[] = ['easy', 'medium', 'hard'];
+
 export const DIFFICULTY_CONFIGS: Record<Difficulty, { ballSpeed: number }> = {
   easy: {
-    ballSpeed: 3,
-  },
-  medium: {
     ballSpeed: 4,
   },
-  hard: {
+  medium: {
     ballSpeed: 6,
+  },
+  hard: {
+    ballSpeed: 8,
   },
 };
 
@@ -28,7 +30,7 @@ export const PADDLE_CONFIG = {
 
 export const BALL_CONFIG = {
   radius: 8,
-  initialSpeed: 4,
+  initialSpeed: DIFFICULTY_CONFIGS.medium.ballSpeed,
 };
 
 export const CONTROLS = {

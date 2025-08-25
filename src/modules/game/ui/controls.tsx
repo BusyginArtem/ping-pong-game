@@ -1,41 +1,23 @@
-import { Play, Pause, RotateCcw, Users, GamepadIcon, Trophy } from 'lucide-react';
+import { Play, Pause, RotateCcw, Users, GamepadIcon, Settings } from 'lucide-react';
 import { Button } from '@/shared/ui/button';
-import { useKeyboard } from '../hooks/useKeyboard';
-import { useGameStore } from '../store/useGameStore';
+import {
+  useGameActions,
+  useGameState,
+  useGameWinner,
+  useGamePlayerNames,
+} from '../store/useGameStore';
 import { GameState } from '../types';
 import { cn } from '@/shared/utils/styling';
 
 function Controls() {
-  const { updateControls, setGameState, resetGame, gameState, playerNames, winner } =
-    useGameStore();
+  const { setGameState, updateControls, resetGame } = useGameActions();
+  const gameState = useGameState();
+  const playerNames = useGamePlayerNames();
+  const winner = useGameWinner();
+  console.log('Controls rendered');
 
   const isPlaying = gameState === GameState.PLAYING;
   const hasPlayerNames = playerNames.playerLeft && playerNames.playerRight;
-
-  useKeyboard({
-    onUpdateControls: (newControls) => {
-      updateControls(newControls);
-    },
-    onPause: () => {
-      if (isPlaying) {
-        setGameState(GameState.PAUSED);
-        updateControls({
-          playerLeftUp: false,
-          playerLeftDown: false,
-          playerRightUp: false,
-          playerRightDown: false,
-        });
-      }
-    },
-    onRestart: () => {
-      if (hasPlayerNames) {
-        resetGame();
-      } else {
-        setGameState(GameState.MENU);
-      }
-    },
-    isGameActive: isPlaying,
-  });
 
   const handleStartPause = () => {
     if (isPlaying) {
@@ -75,34 +57,30 @@ function Controls() {
   return (
     <div className="w-full max-w-4xl mx-auto">
       {/* Game Control Panel */}
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
         {/* Header */}
-        <div className="bg-gradient-to-r from-indigo-600 via-purple-600 to-blue-600 px-6 py-4">
+        <div className="bg-gray-800 dark:bg-gray-900 px-6 py-4 rounded-t-lg">
           <div className="flex items-center justify-center gap-3">
-            <GamepadIcon className="w-6 h-6 text-white" />
-            <h2 className="text-xl font-bold text-white">Game Controls</h2>
+            <GamepadIcon className="w-5 h-5 text-gray-300" />
+            <h2 className="text-lg font-semibold text-gray-100">Game Controls</h2>
           </div>
         </div>
 
         <div className="p-6 space-y-6">
           {/* Player Names Display */}
           {hasPlayerNames && (
-            <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-xl p-4 border border-blue-200 dark:border-blue-800">
-              <div className="flex items-center justify-center gap-4">
+            <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4 border border-gray-200 dark:border-gray-600">
+              <div className="flex items-center justify-center gap-6">
                 <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-blue-500"></div>
-                  <span className="font-semibold text-blue-700 dark:text-blue-300">
+                  <div className="w-3 h-3 rounded-full bg-gray-600"></div>
+                  <span className="font-medium text-gray-700 dark:text-gray-300">
                     {playerNames.playerLeft}
                   </span>
                 </div>
-                <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
-                  <Trophy className="w-4 h-4" />
-                  <span className="font-bold">VS</span>
-                  <Trophy className="w-4 h-4" />
-                </div>
+                <div className="text-gray-400 font-medium">VS</div>
                 <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-red-500"></div>
-                  <span className="font-semibold text-red-700 dark:text-red-300">
+                  <div className="w-3 h-3 rounded-full bg-gray-600"></div>
+                  <span className="font-medium text-gray-700 dark:text-gray-300">
                     {playerNames.playerRight}
                   </span>
                 </div>
@@ -115,25 +93,20 @@ function Controls() {
             <Button
               onClick={handleStartPause}
               size="lg"
-              className={cn(
-                'px-8 py-3 font-semibold text-white rounded-xl shadow-lg transition-all duration-200 hover:scale-105',
-                {
-                  'bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 shadow-green-200/50 dark:shadow-green-900/30':
-                    !isPlaying,
-                  'bg-gradient-to-r from-yellow-500 to-orange-600 hover:from-yellow-600 hover:to-orange-700 shadow-yellow-200/50 dark:shadow-yellow-900/30':
-                    isPlaying,
-                }
-              )}
+              className={cn('px-6 py-3 font-medium rounded-md transition-all duration-200', {
+                'bg-gray-800 hover:bg-gray-700 text-white': !isPlaying,
+                'bg-gray-600 hover:bg-gray-500 text-white': isPlaying,
+              })}
               disabled={winner !== null}
             >
               {isPlaying ? (
                 <>
-                  <Pause className="w-5 h-5 mr-2" />
+                  <Pause className="w-4 h-4 mr-2" />
                   {getStartButtonText()}
                 </>
               ) : (
                 <>
-                  <Play className="w-5 h-5 mr-2" />
+                  <Play className="w-4 h-4 mr-2" />
                   {getStartButtonText()}
                 </>
               )}
@@ -143,10 +116,10 @@ function Controls() {
               onClick={handleReset}
               size="lg"
               variant="outline"
-              className="px-6 py-3 font-semibold rounded-xl border-2 transition-all duration-200 hover:scale-105 bg-gradient-to-r from-blue-500 to-cyan-600 text-white hover:from-blue-600 hover:to-cyan-700 shadow-lg shadow-blue-200/50 dark:shadow-blue-900/30"
+              className="px-6 py-3 font-medium rounded-md transition-all duration-200 hover:bg-gray-50 dark:hover:bg-gray-700"
               disabled={winner !== null}
             >
-              <RotateCcw className="w-5 h-5 mr-2" />
+              <RotateCcw className="w-4 h-4 mr-2" />
               {hasPlayerNames ? 'Reset Game' : 'Reset'}
             </Button>
 
@@ -155,46 +128,44 @@ function Controls() {
                 onClick={handleNewGame}
                 size="lg"
                 variant="outline"
-                className="px-6 py-3 font-semibold rounded-xl border-2 transition-all duration-200 hover:scale-105 bg-gradient-to-r from-purple-500 to-pink-600 text-white hover:from-purple-600 hover:to-pink-700 shadow-lg shadow-purple-200/50 dark:shadow-purple-900/30"
+                className="px-6 py-3 font-medium rounded-md transition-all duration-200 hover:bg-gray-50 dark:hover:bg-gray-700"
                 disabled={isPlaying}
               >
-                <Users className="w-5 h-5 mr-2" />
+                <Users className="w-4 h-4 mr-2" />
                 New Players
               </Button>
             )}
           </div>
 
           {/* Game Status Indicator */}
-          {gameState !== GameState.MENU && (
+          {gameState !== GameState.MENU && gameState !== GameState.IDLE && (
             <div className="text-center">
               <div
                 className={cn(
-                  'inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium',
+                  'inline-flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium border',
                   {
-                    'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 border border-green-300 dark:border-green-700':
-                      isPlaying,
-                    'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 border border-yellow-300 dark:border-yellow-700':
+                    'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600':
+                      isPlaying || winner,
+                    'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 border-gray-300 dark:border-gray-600':
                       gameState === GameState.PAUSED && !winner,
-                    'bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 border border-purple-300 dark:border-purple-700':
-                      winner,
                   }
                 )}
               >
                 {isPlaying && (
                   <>
-                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                    <div className="w-2 h-2 bg-gray-600 rounded-full"></div>
                     Game in Progress
                   </>
                 )}
                 {gameState === GameState.PAUSED && !winner && (
                   <>
-                    <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
+                    <div className="w-2 h-2 bg-gray-500 rounded-full"></div>
                     Game Paused
                   </>
                 )}
                 {winner && (
                   <>
-                    <Trophy className="w-4 h-4" />
+                    <Settings className="w-4 h-4" />
                     Game Completed
                   </>
                 )}
@@ -204,14 +175,14 @@ function Controls() {
 
           {/* Controls Help */}
           {(isPlaying || gameState === GameState.PAUSED) && hasPlayerNames && (
-            <div className="bg-gradient-to-r from-gray-50 to-blue-50 dark:from-gray-800 dark:to-blue-900/20 rounded-xl p-4 border border-gray-200 dark:border-gray-700">
-              <h4 className="text-center font-semibold text-gray-700 dark:text-gray-300 mb-3 flex items-center justify-center gap-2">
+            <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4 border border-gray-200 dark:border-gray-600">
+              <h4 className="text-center font-medium text-gray-700 dark:text-gray-300 mb-3 flex items-center justify-center gap-2">
                 <GamepadIcon className="w-4 h-4" />
                 Keyboard Controls
               </h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                <div className="text-center p-3 bg-white dark:bg-gray-800 rounded-lg border">
-                  <div className="font-medium text-blue-600 dark:text-blue-400 mb-2">
+                <div className="text-center p-3 bg-white dark:bg-gray-800 rounded-md border border-gray-200 dark:border-gray-600">
+                  <div className="font-medium text-gray-700 dark:text-gray-300 mb-2">
                     {playerNames.playerLeft}
                   </div>
                   <div className="space-x-2">
@@ -225,8 +196,8 @@ function Controls() {
                   </div>
                   <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">Up / Down</div>
                 </div>
-                <div className="text-center p-3 bg-white dark:bg-gray-800 rounded-lg border">
-                  <div className="font-medium text-red-600 dark:text-red-400 mb-2">
+                <div className="text-center p-3 bg-white dark:bg-gray-800 rounded-md border border-gray-200 dark:border-gray-600">
+                  <div className="font-medium text-gray-700 dark:text-gray-300 mb-2">
                     {playerNames.playerRight}
                   </div>
                   <div className="space-x-2">
@@ -243,13 +214,13 @@ function Controls() {
               </div>
               <div className="flex justify-center gap-4 text-sm text-gray-600 dark:text-gray-400">
                 <div className="flex items-center gap-1">
-                  <kbd className="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs font-mono border">
+                  <kbd className="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs font-mono border border-gray-300 dark:border-gray-600">
                     Space
                   </kbd>
                   <span>Pause</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <kbd className="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs font-mono border">
+                  <kbd className="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs font-mono border border-gray-300 dark:border-gray-600">
                     R
                   </kbd>
                   <span>Restart</span>

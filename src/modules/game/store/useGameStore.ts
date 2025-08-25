@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import { subscribeWithSelector } from 'zustand/middleware';
 
 import {
   CANVAS_WIDTH,
@@ -32,15 +31,17 @@ type GameStore = {
   };
   winner: Players | null;
 
-  setGameState: (state: GameState) => void;
-  setDifficulty: (level: Difficulty) => void;
-  resetGame: () => void;
-  updateControls: (newControls: Partial<GameStore['controls']>) => void;
-  updateScore: (player: Players) => void;
-  setBall: (ball: Ball) => void;
-  setPaddles: (leftPaddle: Paddle, rightPaddle: Paddle) => void;
-  setPlayerNames: (player1: string, player2: string) => void;
-  setWinner: (winner: Players | null) => void;
+  actions: {
+    setGameState: (state: GameState) => void;
+    setDifficulty: (level: Difficulty) => void;
+    resetGame: () => void;
+    updateControls: (newControls: Partial<Controls>) => void;
+    updateScore: (player: Players) => void;
+    setBall: (ball: Ball) => void;
+    setPaddles: (leftPaddle: Paddle, rightPaddle: Paddle) => void;
+    setPlayerNames: (player1: string, player2: string) => void;
+    setWinner: (winner: Players | null) => void;
+  };
 };
 
 const createInitialBall = (difficulty: Difficulty): Ball => ({
@@ -69,26 +70,26 @@ const createInitialPaddles = () => ({
   },
 });
 
-export const useGameStore = create<GameStore>()(
-  subscribeWithSelector((set, get) => ({
-    // gameState: GameState.MENU,
-    gameState: GameState.PLAYING,
-    difficulty: Difficulty.MEDIUM,
-    ball: createInitialBall(Difficulty.MEDIUM),
-    ...createInitialPaddles(),
-    score: { playerLeft: 0, playerRight: 0 },
-    controls: {
-      playerLeftUp: false,
-      playerLeftDown: false,
-      playerRightUp: false,
-      playerRightDown: false,
-    },
-    playerNames: {
-      playerLeft: '',
-      playerRight: '',
-    },
-    winner: null,
+export const useGameStore = create<GameStore>()((set, get) => ({
+  // gameState: GameState.PLAYING,
+  gameState: GameState.MENU,
+  difficulty: Difficulty.MEDIUM,
+  ball: createInitialBall(Difficulty.MEDIUM),
+  ...createInitialPaddles(),
+  score: { playerLeft: 0, playerRight: 0 },
+  controls: {
+    playerLeftUp: false,
+    playerLeftDown: false,
+    playerRightUp: false,
+    playerRightDown: false,
+  },
+  playerNames: {
+    playerLeft: '',
+    playerRight: '',
+  },
+  winner: null,
 
+  actions: {
     setGameState: (state) => set({ gameState: state }),
 
     setDifficulty: (level) => {
@@ -140,5 +141,17 @@ export const useGameStore = create<GameStore>()(
       set({ playerNames: { playerLeft: player1, playerRight: player2 } }),
 
     setWinner: (winner) => set({ winner }),
-  }))
-);
+  },
+}));
+
+export const useGameState = () => useGameStore((state) => state.gameState);
+export const useGamePlayerNames = () => useGameStore((state) => state.playerNames);
+export const useGameWinner = () => useGameStore((state) => state.winner);
+export const useGameDifficulty = () => useGameStore((state) => state.difficulty);
+export const useGameControls = () => useGameStore((state) => state.controls);
+export const useGameBall = () => useGameStore((state) => state.ball);
+export const useGamePlayerLeftPaddle = () => useGameStore((state) => state.playerLeftPaddle);
+export const useGamePlayerRightPaddle = () => useGameStore((state) => state.playerRightPaddle);
+export const useGameScore = () => useGameStore((state) => state.score);
+
+export const useGameActions = () => useGameStore((state) => state.actions);
