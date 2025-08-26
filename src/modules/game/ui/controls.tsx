@@ -14,7 +14,6 @@ function Controls() {
   const gameState = useGameState();
   const playerNames = useGamePlayerNames();
   const winner = useGameWinner();
-  console.log('Controls rendered');
 
   const isPlaying = gameState === GameState.PLAYING;
   const hasPlayerNames = playerNames.playerLeft && playerNames.playerRight;
@@ -45,6 +44,7 @@ function Controls() {
 
   const handleNewGame = () => {
     setGameState(GameState.MENU);
+    resetGame();
   };
 
   const getStartButtonText = () => {

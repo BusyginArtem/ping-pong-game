@@ -10,7 +10,7 @@ import type { Ball, Paddle, Controls, Difficulty, Players } from '../types';
 export class GameEngine {
   private paddleSpeed = 6;
   private maxBallSpeed = 8;
-  private trailLength = 8;
+  private trailLength = 30;
 
   /**
    * Updates paddle positions based on current controls
@@ -63,15 +63,6 @@ export class GameEngine {
     // Update ball position
     newBall.position.x += newBall.velocity.x;
     newBall.position.y += newBall.velocity.y;
-
-    // TODO remove debug logs
-    const speed = Math.sqrt(newBall.velocity.x ** 2 + newBall.velocity.y ** 2);
-    const angle = Math.atan2(newBall.velocity.y, newBall.velocity.x);
-    const direction = this.getBallDirection(newBall.velocity.x, newBall.velocity.y);
-
-    console.log(
-      `Ball Direction: ${direction}, Speed: ${speed.toFixed(2)}, Angle: ${((angle * 180) / Math.PI).toFixed(1)}°`
-    );
 
     // Add trail
     newBall.trails = [
@@ -156,35 +147,13 @@ export class GameEngine {
    * Limits ball speed based on difficulty
    */
   private limitBallSpeed(ball: Ball, difficulty: Difficulty): void {
-    const maxSpeed = DIFFICULTY_CONFIGS[difficulty].ballSpeed * 1.2;
+    const maxSpeed = DIFFICULTY_CONFIGS[difficulty].ballSpeed * 1.15;
     const currentSpeed = Math.sqrt(ball.velocity.x ** 2 + ball.velocity.y ** 2);
 
     if (currentSpeed > maxSpeed) {
       const ratio = maxSpeed / currentSpeed;
       ball.velocity.x *= ratio;
       ball.velocity.y *= ratio;
-    }
-  }
-
-  private getBallDirection(velocityX: number, velocityY: number): string {
-    const absX = Math.abs(velocityX);
-    const absY = Math.abs(velocityY);
-
-    // Determine primary horizontal direction
-    const horizontal = velocityX > 0 ? 'Right' : 'Left';
-
-    // Determine vertical component
-    let vertical = '';
-    if (absY > absX * 0.3) {
-      // Only include vertical if it's significant
-      vertical = velocityY > 0 ? 'Down' : 'Up';
-    }
-
-    // Combine directions
-    if (vertical) {
-      return `${vertical}-${horizontal}`;
-    } else {
-      return horizontal;
     }
   }
 

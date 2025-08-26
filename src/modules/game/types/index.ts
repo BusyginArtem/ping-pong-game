@@ -5,7 +5,6 @@ export interface Position {
 
 export interface Trail {
   position: Position;
-  // opacity: number;
   timestamp: number;
 }
 

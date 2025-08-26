@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { Trophy, Medal, Award, Calendar, Users, Target } from 'lucide-react';
+import { Trophy, Medal, Award, Calendar, Users } from 'lucide-react';
 import { useLeaderBoard } from '../hooks/useLeaderBoard';
 import { getDifficultyColor, getWinner } from '@/shared/utils/game';
 
@@ -101,25 +101,6 @@ function LeaderBoard() {
             </div>
           );
         })}
-      </div>
-
-      {/* Stats Footer */}
-      <div className="px-6 py-3 bg-gray-100 dark:bg-gray-800 text-center border-t border-gray-200 dark:border-gray-600">
-        <div className="flex justify-center items-center gap-6 text-sm text-gray-600 dark:text-gray-400">
-          <div className="flex items-center gap-1">
-            <Target className="w-4 h-4" />
-            <span>{leaderboardLength} Total Games</span>
-          </div>
-          <div className="flex items-center gap-1">
-            <Trophy className="w-4 h-4" />
-            <span>
-              Best of{' '}
-              {Math.max(
-                ...leaderboard.map((entry) => Math.max(...entry.score.split('-').map(Number)))
-              )}
-            </span>
-          </div>
-        </div>
       </div>
     </div>
   );
