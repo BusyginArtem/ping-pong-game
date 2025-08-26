@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '@/shared/ui/button';
 import { cn } from '@/shared/utils/styling';
 import { Settings } from 'lucide-react';
@@ -13,6 +13,7 @@ import {
 import { Input } from '@/shared/ui/input';
 import { DIFFICULTY_LEVELS } from '@/shared/constants';
 import { getDifficultyColor } from '@/shared/utils/game';
+import { useScrollToTop } from '@/shared/hooks/useScrollToTop';
 
 interface StartGameModalProps {
   isOpen: boolean;
@@ -72,6 +73,13 @@ export default function StartGameModal({ isOpen, onStartGame, onCancel }: StartG
   const playerNames = useGamePlayerNames();
   const winner = useGameWinner();
   const { resetGame, setDifficulty } = useGameActions();
+  const scrollToTop = useScrollToTop();
+
+  useEffect(() => {
+    if (isOpen) {
+      scrollToTop({ behavior: 'smooth' });
+    }
+  }, [isOpen, scrollToTop]);
 
   const hasPlayerNames = playerNames.playerLeft && playerNames.playerRight;
   const isPlaying = gameState === GameState.PLAYING;

@@ -71,7 +71,6 @@ const createInitialPaddles = () => ({
 });
 
 export const useGameStore = create<GameStore>()((set, get) => ({
-  // gameState: GameState.PLAYING,
   gameState: GameState.MENU,
   difficulty: Difficulty.MEDIUM,
   ball: createInitialBall(Difficulty.MEDIUM),
@@ -155,3 +154,5 @@ export const useGamePlayerRightPaddle = () => useGameStore((state) => state.play
 export const useGameScore = () => useGameStore((state) => state.score);
 
 export const useGameActions = () => useGameStore((state) => state.actions);
+
+export const useGameEnded = () => useGameStore((state) => state.gameState === GameState.IDLE);
