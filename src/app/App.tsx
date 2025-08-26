@@ -1,26 +1,73 @@
+import { GamepadIcon, Users, Target, Settings } from 'lucide-react';
+
 import Board from '@/modules/game/ui/board';
 import Controls from '@/modules/game/ui/controls';
 import LeaderBoard from '@/modules/game/ui/leaderboard';
 
 function App() {
   return (
-    <main className="min-h-screen flex flex-col items-center bg-gray-50 p-8 ">
-      <header className="mb-8 flex flex-col items-center text-center max-w-2xl">
-        <h1 className="text-4xl font-bold mb-8">Ping Pong Game</h1>
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <main className="relative min-h-screen flex flex-col items-center p-4 sm:p-6 lg:p-8">
+        {/* Header Section */}
+        <header className="mb-6 lg:mb-8 flex flex-col items-center text-center max-w-4xl">
+          {/* Main Title */}
+          <div className="relative mb-4">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-800 dark:text-gray-100 tracking-tight">
+              Ping Pong Game
+            </h1>
+          </div>
 
-        <p>
-          Welcome to the Ping Pong Game! Use the W/S keys to move the left paddle and ArrowUp/Down
-          keys to move the right paddle. Have fun!
-        </p>
-      </header>
+          {/* Subtitle */}
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-4 sm:p-6 border border-gray-200 dark:border-gray-700 shadow-sm">
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <GamepadIcon className="w-6 h-6 text-gray-600 dark:text-gray-400" />
+              <span className="text-lg font-semibold text-gray-700 dark:text-gray-300">
+                Classic Arcade Game
+              </span>
+            </div>
 
-      <section className="flex flex-col items-center gap-8">
-        <Board />
-        <Controls />
-      </section>
+            <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-base sm:text-md max-w-2xl">
+              Experience the timeless ping pong game with smooth controls and clean visuals.
+              Challenge your friends in this classic arcade-style game.
+            </p>
 
-      <LeaderBoard />
-    </main>
+            {/* Feature Highlights */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4">
+              <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+                <Users className="w-4 h-4" />
+                <span>Two Player Mode</span>
+              </div>
+              <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+                <Target className="w-4 h-4" />
+                <span>Multiple Difficulties</span>
+              </div>
+              <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+                <Settings className="w-4 h-4" />
+                <span>Match History</span>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        {/* Game Section */}
+        <section className="flex flex-col items-center gap-4 lg:gap-6 w-full max-w-6xl">
+          {/* Game Board */}
+          <div className="w-full flex justify-center">
+            <Board />
+          </div>
+
+          {/* Controls */}
+          <div className="w-full">
+            <Controls />
+          </div>
+        </section>
+
+        {/* Leaderboard Section */}
+        <div className="w-full max-w-6xl">
+          <LeaderBoard />
+        </div>
+      </main>
+    </div>
   );
 }
 

@@ -16,7 +16,7 @@ export const useKeyboard = ({
 }) => {
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
-      if (Object.values(CONTROLS).includes(event.code)) {
+      if (Object.values(CONTROLS).includes(event.code) && isGameActive) {
         event.preventDefault();
       }
 

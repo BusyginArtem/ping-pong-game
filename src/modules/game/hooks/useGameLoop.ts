@@ -46,19 +46,4 @@ export const useGameLoop = ({ gameState, onUpdate }: UseGameLoopProps) => {
       }
     };
   }, [gameState, animate]);
-
-  const startLoop = useCallback(() => {
-    if (!animationId.current && gameState === GameState.PLAYING) {
-      animationId.current = requestAnimationFrame(animate);
-    }
-  }, [gameState, animate]);
-
-  const stopLoop = useCallback(() => {
-    if (animationId.current) {
-      cancelAnimationFrame(animationId.current);
-      animationId.current = undefined;
-    }
-  }, []);
-
-  return { startLoop, stopLoop };
 };
