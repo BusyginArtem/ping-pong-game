@@ -1,7 +1,7 @@
-import { memo } from 'react';
 import { Trophy, Medal, Award, Calendar, Users } from 'lucide-react';
 import { useLeaderBoard } from '../hooks/useLeaderBoard';
 import { getDifficultyColor, getWinner } from '@/shared/utils/game';
+import { useGameEnded } from '../store/useGameStore';
 
 const getRankIcon = (index: number) => {
   switch (index) {
@@ -22,6 +22,7 @@ const getRankIcon = (index: number) => {
 
 function LeaderBoard() {
   const { leaderboard } = useLeaderBoard();
+  useGameEnded();
 
   const leaderboardLength = leaderboard.length;
 
@@ -106,4 +107,4 @@ function LeaderBoard() {
   );
 }
 
-export default memo(LeaderBoard);
+export default LeaderBoard;
