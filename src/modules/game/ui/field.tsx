@@ -50,6 +50,7 @@ function Field() {
 
   return (
     <canvas
+      data-testid="field-canvas"
       ref={canvasRef}
       width={CANVAS_WIDTH}
       height={CANVAS_HEIGHT}
