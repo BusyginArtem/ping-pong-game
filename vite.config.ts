@@ -19,7 +19,7 @@ export default defineConfig({
             name: 'Roboto',
             weights: [400, 700],
             styles: ['normal'],
-            subset: 'latin' 
+            subset: 'latin',
           },
         ],
       },
@@ -34,5 +34,12 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: './src/tests/setup.ts',
+    include: ['src/tests/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
+    exclude: ['node_modules', 'dist', '.idea', '.git', '.cache'],
+    coverage: {
+      reporter: ['text', 'json', 'html'],
+      exclude: ['node_modules/', 'src/tests/', '**/*.d.ts', '**/*.config.*', '**/coverage/**'],
+    },
+    testTimeout: 10000,
   },
 });

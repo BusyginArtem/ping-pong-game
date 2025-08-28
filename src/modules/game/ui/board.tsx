@@ -43,8 +43,6 @@ export default function Board() {
     setPlayerNames(playerLeftName, playerRightName);
     setGameState(GameState.PLAYING);
   };
-  console.log('<<<<<<<<< gameState >>>>>>', gameState);
-  console.log('<<<<<<<<< playerNames >>>>>>', playerNames);
 
   return (
     <div className="relative" data-testid="board">
