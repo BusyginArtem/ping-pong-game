@@ -1,0 +1,52 @@
+name: Check before merge
+
+# Controls when the action will run.
+on:
+  # Triggers the workflow on pull request event but only for the main branch
+  pull_request:
+    branches:
+      - main
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  # Build Job
+  Build:
+    name: build job
+
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: checkout repository
+        uses: actions/checkout@v5
+      #
+      - name: set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: 'npm'
+
+      # clean cache
+      - name: clean cache
+        run: npm cache clean --force
+
+      # install app dependencies
+      - name: install dependencies
+        run: |
+          npm install
+
+      # run tests
+      - name: run tests
+        run: |
+          npm run test
+
+      # build the app
+      - name: build
+        run: |
+          npm run build
+        env:
+          CI: false
