@@ -6,11 +6,11 @@ import { useGameEnded } from '../store/useGameStore';
 const getRankIcon = (index: number) => {
   switch (index) {
     case 0:
-      return <Trophy className="w-5 h-5 text-gray-700 dark:text-gray-300" />;
+      return <Trophy className="w-5 h-5 text-gray-700" />;
     case 1:
-      return <Medal className="w-5 h-5 text-gray-600 dark:text-gray-400" />;
+      return <Medal className="w-5 h-5 text-gray-600" />;
     case 2:
-      return <Award className="w-5 h-5 text-gray-500 dark:text-gray-500" />;
+      return <Award className="w-5 h-5 text-gray-500" />;
     default:
       return (
         <span className="w-5 h-5 flex items-center justify-center text-sm font-bold text-gray-500">
@@ -30,14 +30,12 @@ function LeaderBoard() {
     return (
       <div
         data-testid="leaderboard"
-        className="mt-8 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-8"
+        className="mt-8 bg-white rounded-lg shadow-sm border border-gray-200 p-8"
       >
         <div className="text-center">
           <div className="text-4xl mb-4 text-gray-400">🏓</div>
-          <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">No Games Yet</h3>
-          <p className="text-gray-600 dark:text-gray-300">
-            Start playing to see your match history here.
-          </p>
+          <h3 className="text-xl font-semibold text-gray-900 mb-2">No Games Yet</h3>
+          <p className="text-gray-600">Start playing to see your match history here.</p>
         </div>
       </div>
     );
@@ -46,7 +44,7 @@ function LeaderBoard() {
   return (
     <div
       data-testid="leaderboard"
-      className="mt-8 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden"
+      className="mt-8 bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden"
     >
       {/* Header */}
       <div className="bg-gray-800   px-6 py-4">
@@ -62,7 +60,7 @@ function LeaderBoard() {
       </div>
 
       {/* Games List */}
-      <div className="divide-y divide-gray-200 dark:divide-gray-600">
+      <div className="divide-y divide-gray-200">
         {leaderboard.reverse().map((entry, index) => {
           const { winner, loser, winnerScore, loserScore } = getWinner(entry);
           const actualIndex = leaderboardLength - 1 - index;
@@ -70,7 +68,7 @@ function LeaderBoard() {
           return (
             <div
               key={`${entry.date}-${index}`}
-              className="px-6 py-4 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
+              className="px-6 py-4 hover:bg-gray-50 transition-colors"
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
@@ -81,17 +79,17 @@ function LeaderBoard() {
                   <div className="flex-grow">
                     <div className="flex items-center gap-2 mb-1">
                       <Users className="w-4 h-4 text-gray-400" />
-                      <span className="font-medium text-gray-800 dark:text-gray-200">{winner}</span>
+                      <span className="font-medium text-gray-800">{winner}</span>
                       <span className="text-gray-500">defeated</span>
-                      <span className="font-medium text-gray-600 dark:text-gray-400">{loser}</span>
+                      <span className="font-medium text-gray-600">{loser}</span>
                     </div>
 
-                    <div className="flex items-center gap-3 text-sm text-gray-500 dark:text-gray-400">
+                    <div className="flex items-center gap-3 text-sm text-gray-500">
                       <div className="flex items-center gap-1">
                         <Calendar className="w-3 h-3" />
                         {entry.date}
                       </div>
-                      <div className="text-lg font-bold text-gray-700 dark:text-gray-300">
+                      <div className="text-lg font-bold text-gray-700">
                         {winnerScore} - {loserScore}
                       </div>
                     </div>

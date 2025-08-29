@@ -31,46 +31,40 @@ export default function GameOverModal({ isOpen, onNewGame }: GameOverModalProps)
       <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={onNewGame} />
 
       {/* Modal */}
-      <div className="relative bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 w-full max-w-lg mx-4">
+      <div className="relative bg-white rounded-lg shadow-lg border border-gray-200 w-full max-w-lg mx-4">
         <div className="p-8 text-center">
           {/* Winner Section */}
           <div className="mb-6">
             <div className="text-4xl mb-4 text-gray-600">🏆</div>
-            <h2 className="text-3xl font-semibold text-gray-900 dark:text-white mb-2">
-              {winnerName} Wins
-            </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-300">
-              Congratulations on your victory!
-            </p>
+            <h2 className="text-3xl font-semibold text-gray-900 mb-2">{winnerName} Wins</h2>
+            <p className="text-lg text-gray-600">Congratulations on your victory!</p>
           </div>
 
           {/* Score Display */}
-          <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-6 mb-6 border border-gray-200 dark:border-gray-600">
-            <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300 mb-4">
-              Final Score
-            </h3>
+          <div className="bg-gray-50 rounded-lg p-6 mb-6 border border-gray-200">
+            <h3 className="text-lg font-medium text-gray-700 mb-4">Final Score</h3>
             <div className="flex justify-center items-center gap-8">
               <div className="text-center">
                 <div
-                  className={`text-2xl font-bold ${winner === 'playerLeft' ? 'text-gray-800 dark:text-gray-200' : 'text-gray-500 dark:text-gray-400'}`}
+                  className={`text-2xl font-bold ${winner === 'playerLeft' ? 'text-gray-800' : 'text-gray-500'}`}
                 >
                   {score.playerLeft}
                 </div>
-                <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                <div className="text-sm text-gray-600 mt-1">
                   {playerNames.playerLeft}
                   {winner === 'playerLeft' && <span className="ml-1 text-gray-700">👑</span>}
                 </div>
               </div>
 
-              <div className="text-2xl font-bold text-gray-400 dark:text-gray-500">:</div>
+              <div className="text-2xl font-bold text-gray-400">:</div>
 
               <div className="text-center">
                 <div
-                  className={`text-2xl font-bold ${winner === 'playerRight' ? 'text-gray-800 dark:text-gray-200' : 'text-gray-500 dark:text-gray-400'}`}
+                  className={`text-2xl font-bold ${winner === 'playerRight' ? 'text-gray-800' : 'text-gray-500'}`}
                 >
                   {score.playerRight}
                 </div>
-                <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                <div className="text-sm text-gray-600 mt-1">
                   {playerNames.playerRight}
                   {winner === 'playerRight' && <span className="ml-1 text-gray-700">👑</span>}
                 </div>
@@ -88,10 +82,10 @@ export default function GameOverModal({ isOpen, onNewGame }: GameOverModalProps)
           </div>
 
           {/* Game Stats */}
-          <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-4 mb-6 border border-gray-200 dark:border-gray-600">
-            <div className="text-sm text-gray-700 dark:text-gray-300">
+          <div className="bg-gray-100 rounded-lg p-4 mb-6 border border-gray-200">
+            <div className="text-sm text-gray-700">
               <div>📊 Game saved to match history</div>
-              <div className="mt-1 text-gray-600 dark:text-gray-400">
+              <div className="mt-1 text-gray-600">
                 {new Date().toLocaleDateString()} • {new Date().toLocaleTimeString()}
               </div>
             </div>
@@ -106,7 +100,7 @@ export default function GameOverModal({ isOpen, onNewGame }: GameOverModalProps)
             <Button
               onClick={onNewGame}
               variant="ghost"
-              className="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+              className="text-sm text-gray-500 hover:text-gray-700"
             >
               Close
             </Button>

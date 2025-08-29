@@ -10,6 +10,11 @@ const __dirname = path.dirname(__filename);
 
 export default defineConfig({
   base: '/ping-pong-game/',
+  // root: path.resolve(__dirname, 'src/app'),
+  build: {
+    outDir: path.resolve(__dirname, 'dist'),
+    emptyOutDir: true,
+  },
   plugins: [
     react(),
     tailwindcss(),
