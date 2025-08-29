@@ -15,6 +15,7 @@ function App() {
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-800 tracking-tight">
               Ping Pong Game
             </h1>
+            <h2>Test GitHub Workflow</h2>
           </div>
 
           {/* Subtitle */}

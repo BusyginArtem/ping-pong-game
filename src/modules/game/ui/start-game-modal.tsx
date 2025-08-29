@@ -23,42 +23,22 @@ interface StartGameModalProps {
 
 const Controls = () => {
   return (
-    <div className="mt-6 p-4 bg-gray-50 /50 rounded-lg border border-gray-200 dark:border-gray-600">
+    <div className="mt-6 p-4 bg-gray-50 /50 rounded-lg border border-gray-200">
       <h3 className="text-sm font-medium text-gray-700 mb-2">Controls:</h3>
-      <div className="text-xs text-gray-600 dark:text-gray-400 space-y-1">
+      <div className="text-xs text-gray-600 space-y-1">
         <div>
-          Player 1:{' '}
-          <kbd className="bg-white dark:bg-gray-600 px-1 rounded border border-gray-300 dark:border-gray-500">
-            W
-          </kbd>{' '}
-          /{' '}
-          <kbd className="bg-white dark:bg-gray-600 px-1 rounded border border-gray-300 dark:border-gray-500">
-            S
-          </kbd>{' '}
-          keys
+          Player 1: <kbd className="bg-white px-1 rounded border border-gray-300">W</kbd> /{' '}
+          <kbd className="bg-white px-1 rounded border border-gray-300">S</kbd> keys
         </div>
         <div>
-          Player 2:{' '}
-          <kbd className="bg-white dark:bg-gray-600 px-1 rounded border border-gray-300 dark:border-gray-500">
-            ↑
-          </kbd>{' '}
-          /{' '}
-          <kbd className="bg-white dark:bg-gray-600 px-1 rounded border border-gray-300 dark:border-gray-500">
-            ↓
-          </kbd>{' '}
-          keys
+          Player 2: <kbd className="bg-white px-1 rounded border border-gray-300">↑</kbd> /{' '}
+          <kbd className="bg-white px-1 rounded border border-gray-300">↓</kbd> keys
         </div>
         <div>
-          Pause:{' '}
-          <kbd className="bg-white dark:bg-gray-600 px-1 rounded border border-gray-300 dark:border-gray-500">
-            Space
-          </kbd>
+          Pause: <kbd className="bg-white px-1 rounded border border-gray-300">Space</kbd>
         </div>
         <div>
-          Restart:{' '}
-          <kbd className="bg-white dark:bg-gray-600 px-1 rounded border border-gray-300 dark:border-gray-500">
-            R
-          </kbd>
+          Restart: <kbd className="bg-white px-1 rounded border border-gray-300">R</kbd>
         </div>
       </div>
     </div>
@@ -138,12 +118,10 @@ export default function StartGameModal({ isOpen, onStartGame, onCancel }: StartG
       <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={handleCancel} />
 
       {/* Modal */}
-      <div className="relative bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 w-full max-w-md mx-4">
+      <div className="relative bg-white rounded-lg shadow-lg border border-gray-200 w-full max-w-md mx-4">
         <div className="p-6">
           <div className="text-center mb-6">
-            <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2">
-              Setup New Game
-            </h2>
+            <h2 className="text-2xl font-semibold text-gray-900 mb-2">Setup New Game</h2>
             <p className="text-gray-600">Enter player names to start</p>
           </div>
 
@@ -188,7 +166,7 @@ export default function StartGameModal({ isOpen, onStartGame, onCancel }: StartG
             </div>
 
             {/* Difficulty Selection */}
-            <div className="bg-gray-50 /30 rounded-lg p-4 border border-gray-200 dark:border-gray-600">
+            <div className="bg-gray-50 /30 rounded-lg p-4 border border-gray-200">
               <div className="flex items-center justify-center gap-3 mb-3">
                 <Settings className="w-4 h-4 text-gray-600" />
                 <span className="font-medium text-gray-700">Difficulty Level</span>
