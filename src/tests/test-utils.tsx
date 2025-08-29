@@ -13,7 +13,6 @@ import {
 
 // Reset the store before each test
 export const resetGameStore = () => {
-  console.log('Resetting game store to initial state');
   useGameStore.setState({
     gameState: GameState.MENU,
     difficulty: Difficulty.MEDIUM,

@@ -47,7 +47,6 @@ describe('Leaderboard Component', () => {
 
   it('displays game entries correctly', () => {
     render(<Leaderboard />);
-    screen.debug();
     expect(screen.getByText('Alice')).toBeInTheDocument();
     expect(screen.getAllByText('defeated')).toHaveLength(2);
     expect(screen.getByText('Bob')).toBeInTheDocument();
