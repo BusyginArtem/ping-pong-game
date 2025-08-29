@@ -24,6 +24,6 @@ dist-ssr
 *.sw?
 
 # Remove this during development after polishing
-Notes.md
-Project_plan.md
+# Notes.md
+# Project_plan.md
 
