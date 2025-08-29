@@ -23,7 +23,10 @@ export default function GameOverModal({ isOpen, onNewGame }: GameOverModalProps)
   const winnerName = winner === 'playerLeft' ? playerNames.playerLeft : playerNames.playerRight;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center"
+      data-testid="game-over-modal"
+    >
       {/* Backdrop */}
       <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={onNewGame} />
 

@@ -28,7 +28,10 @@ function LeaderBoard() {
 
   if (leaderboardLength === 0) {
     return (
-      <div className="mt-8 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-8">
+      <div
+        data-testid="leaderboard"
+        className="mt-8 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-8"
+      >
         <div className="text-center">
           <div className="text-4xl mb-4 text-gray-400">🏓</div>
           <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">No Games Yet</h3>
@@ -41,9 +44,12 @@ function LeaderBoard() {
   }
 
   return (
-    <div className="mt-8 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
+    <div
+      data-testid="leaderboard"
+      className="mt-8 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden"
+    >
       {/* Header */}
-      <div className="bg-gray-800 dark:bg-gray-900 px-6 py-4">
+      <div className="bg-gray-800   px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Trophy className="w-5 h-5 text-gray-300" />

@@ -45,7 +45,7 @@ export default function Board() {
   };
 
   return (
-    <div className="relative">
+    <div className="relative" data-testid="board">
       <Field />
 
       <StartGameModal

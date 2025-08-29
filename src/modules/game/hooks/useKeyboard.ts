@@ -16,6 +16,7 @@ export const useKeyboard = ({
 }) => {
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
+      console.log('keydown:', event.code);
       if (Object.values(CONTROLS).includes(event.code) && isGameActive) {
         event.preventDefault();
       }
@@ -49,6 +50,7 @@ export const useKeyboard = ({
 
   const handleKeyUp = useCallback(
     (event: KeyboardEvent) => {
+      console.log('keydown:', event.code);
       switch (event.code) {
         case CONTROLS.PLAYER_LEFT_UP:
           onUpdateControls({ playerLeftUp: false });
@@ -76,4 +78,8 @@ export const useKeyboard = ({
       window.removeEventListener('keyup', handleKeyUp);
     };
   }, [handleKeyDown, handleKeyUp]);
+
+  // if (process.env.NODE_ENV === 'test') {
+  return { handleKeyDown, handleKeyUp };
+  // }
 };
