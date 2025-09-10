@@ -1,4 +1,4 @@
-import { Difficulty } from '@/modules/game/types';
+import { Difficulty } from '@/features/game/types';
 
 export const CANVAS_WIDTH = 800;
 export const CANVAS_HEIGHT = 500;

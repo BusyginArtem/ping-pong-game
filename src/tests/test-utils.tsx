@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, type RenderOptions } from '@testing-library/react';
 
-import { Difficulty, GameState } from '@/modules/game/types';
-import { useGameStore } from '@/modules/game/store/useGameStore';
+import { Difficulty, GameState } from '@/features/game/types';
+import { useGameStore } from '@/features/game/store/useGameStore';
 import {
   PADDLE_CONFIG,
   CANVAS_HEIGHT,

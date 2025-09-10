@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { useGameStore } from '@/modules/game/store/useGameStore';
-import { GameState, Difficulty } from '@/modules/game/types';
+import { useGameStore } from '@/features/game/store/useGameStore';
+import { GameState, Difficulty } from '@/features/game/types';
 
 describe('useGameStore', () => {
   it('has correct initial state', () => {

@@ -5,7 +5,7 @@ import {
   clearLeaderboard,
   generateGameId,
 } from '@/shared/utils/leader-board-local-storage';
-import type { LeaderboardEntry } from '@/modules/game/types';
+import type { LeaderboardEntry } from '@/features/game/types';
 
 const mockLocalStorage = (() => {
   let store: Record<string, string> = {};

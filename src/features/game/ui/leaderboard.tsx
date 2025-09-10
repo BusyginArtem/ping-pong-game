@@ -1,6 +1,6 @@
 import { Trophy, Medal, Award, Calendar, Users } from 'lucide-react';
 import { useLeaderBoard } from '../hooks/useLeaderBoard';
-import { getDifficultyColor, getWinner } from '@/shared/utils/game';
+import { getDifficultyColor, getWinner } from '@/features/game/utils';
 import { useGameEnded } from '../store/useGameStore';
 
 const getRankIcon = (index: number) => {

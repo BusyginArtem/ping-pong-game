@@ -1,11 +1,11 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
-import { useGameLogic } from '@/modules/game/hooks/useGameLogic';
-import { useGameStore } from '@/modules/game/store/useGameStore';
-import { GameState, Difficulty } from '@/modules/game/types';
+import { useGameLogic } from '@/features/game/hooks/useGameLogic';
+import { useGameStore } from '@/features/game/store/useGameStore';
+import { GameState, Difficulty } from '@/features/game/types';
 
 // Mock the leaderboard hook
-vi.mock('@/modules/game/hooks/useLeaderBoard', () => ({
+vi.mock('@/features/game/hooks/useLeaderBoard', () => ({
   useLeaderBoard: vi.fn(() => ({
     onSaveLeaderboard: vi.fn(),
   })),

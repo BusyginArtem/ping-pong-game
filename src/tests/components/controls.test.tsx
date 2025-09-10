@@ -1,9 +1,9 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { fireEvent } from '@testing-library/react';
 
-import Controls from '@/modules/game/ui/controls';
-import { GameState } from '@/modules/game/types';
-import { useGameStore } from '@/modules/game/store/useGameStore';
+import Controls from '@/features/game/ui/controls';
+import { GameState } from '@/features/game/types';
+import { useGameStore } from '@/features/game/store/useGameStore';
 
 import { render, screen, act } from '../test-utils';
 

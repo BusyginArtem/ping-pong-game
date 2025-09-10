@@ -1,8 +1,8 @@
 import { GamepadIcon, Users, Target, Settings } from 'lucide-react';
 
-import Board from '@/modules/game/ui/board';
-import Controls from '@/modules/game/ui/controls';
-import LeaderBoard from '@/modules/game/ui/leaderboard';
+import Board from '@/features/game/ui/board';
+import Controls from '@/features/game/ui/controls';
+import LeaderBoard from '@/features/game/ui/leaderboard';
 
 function App() {
   return (

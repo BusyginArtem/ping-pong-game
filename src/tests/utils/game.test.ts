@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
-import { getDifficultyColor, getWinner } from '@/shared/utils/game';
-import { Difficulty } from '@/modules/game/types';
-import type { LeaderboardEntry } from '@/modules/game/types';
+import { getDifficultyColor, getWinner } from '@/features/game/utils';
+import { Difficulty } from '@/features/game/types';
+import type { LeaderboardEntry } from '@/features/game/types';
 
 describe('Game Utilities', () => {
   describe('getDifficultyColor', () => {

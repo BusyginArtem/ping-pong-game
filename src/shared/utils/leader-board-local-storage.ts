@@ -1,4 +1,4 @@
-import type { LeaderboardEntry } from '@/modules/game/types';
+import type { LeaderboardEntry } from '@/features/game/types';
 
 const LEADERBOARD_KEY = 'ping_pong_leaderboard';
 

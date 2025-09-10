@@ -1,9 +1,9 @@
 import { act, fireEvent, render, waitFor } from '../test-utils';
 import { describe, it, expect } from 'vitest';
 
-import Board from '@/modules/game/ui/board';
-import { GameState } from '@/modules/game/types';
-import { useGameStore } from '@/modules/game/store/useGameStore';
+import Board from '@/features/game/ui/board';
+import { GameState } from '@/features/game/types';
+import { useGameStore } from '@/features/game/store/useGameStore';
 
 describe('Board', () => {
   it('renders field and start game modal correctly', () => {

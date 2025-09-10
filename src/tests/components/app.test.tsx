@@ -4,7 +4,7 @@ import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '../test-utils';
 
 // Mock the leaderboard hook
-vi.mock('@/modules/game/hooks/useLeaderBoard', () => ({
+vi.mock('@/features/game/hooks/useLeaderBoard', () => ({
   useLeaderBoard: vi.fn(() => ({
     leaderboard: [],
     onSaveLeaderboard: vi.fn(),
@@ -12,7 +12,7 @@ vi.mock('@/modules/game/hooks/useLeaderBoard', () => ({
 }));
 
 // Mock keyboard hook
-vi.mock('@/modules/game/hooks/useKeyboard', () => ({
+vi.mock('@/features/game/hooks/useKeyboard', () => ({
   useKeyboard: vi.fn(),
 }));
 

@@ -1,16 +1,16 @@
 import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
-import Leaderboard from '@/modules/game/ui/leaderboard';
+import Leaderboard from '@/features/game/ui/leaderboard';
 import { render, screen } from '../test-utils';
-import type { LeaderboardEntry } from '@/modules/game/types';
-import { useLeaderBoard } from '@/modules/game/hooks/useLeaderBoard';
+import type { LeaderboardEntry } from '@/features/game/types';
+import { useLeaderBoard } from '@/features/game/hooks/useLeaderBoard';
 
 // Mock the leaderboard hook
-vi.mock('@/modules/game/hooks/useLeaderBoard', () => ({
+vi.mock('@/features/game/hooks/useLeaderBoard', () => ({
   useLeaderBoard: vi.fn(),
 }));
 
 // Mock the store hook
-// vi.mock('@/modules/game/store/useGameStore', () => ({
+// vi.mock('@/features/game/store/useGameStore', () => ({
 //   useGameEnded: vi.fn(() => false),
 // }));
 
