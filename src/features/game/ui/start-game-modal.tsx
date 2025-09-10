@@ -12,7 +12,7 @@ import {
 } from '../store/useGameStore';
 import { Input } from '@/shared/ui/input';
 import { DIFFICULTY_LEVELS } from '@/shared/constants';
-import { getDifficultyColor } from '@/shared/utils/game';
+import { getDifficultyColor } from '@/features/game/utils';
 import { useScrollToTop } from '@/shared/hooks/useScrollToTop';
 
 interface StartGameModalProps {

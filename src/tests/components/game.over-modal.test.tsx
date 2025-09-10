@@ -1,10 +1,10 @@
 import { describe, it, expect, vi } from 'vitest';
 import { fireEvent } from '@testing-library/react';
 
-import GameOverModal from '@/modules/game/ui/game-over-modal';
-import { Difficulty } from '@/modules/game/types';
+import GameOverModal from '@/features/game/ui/game-over-modal';
+import { Difficulty } from '@/features/game/types';
 
-import { useGameStore } from '@/modules/game/store/useGameStore';
+import { useGameStore } from '@/features/game/store/useGameStore';
 import { render, screen, act } from '../test-utils';
 
 describe('GameOverModal Component', () => {

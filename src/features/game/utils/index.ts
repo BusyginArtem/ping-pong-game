@@ -1,4 +1,4 @@
-import type { Difficulty, LeaderboardEntry } from '@/modules/game/types';
+import type { Difficulty, LeaderboardEntry } from '../types';
 
 export const getDifficultyColor = (difficulty: Difficulty) => {
   switch (difficulty) {

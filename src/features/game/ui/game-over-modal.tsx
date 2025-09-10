@@ -5,7 +5,7 @@ import {
   useGameScore,
   useGameWinner,
 } from '../store/useGameStore';
-import { getDifficultyColor } from '@/shared/utils/game';
+import { getDifficultyColor } from '@/features/game/utils';
 
 interface GameOverModalProps {
   isOpen: boolean;

@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { renderHook } from '@testing-library/react';
 
-import { useKeyboard } from '@/modules/game/hooks/useKeyboard';
+import { useKeyboard } from '@/features/game/hooks/useKeyboard';
 import { CONTROLS } from '@/shared/constants';
 
 describe('useKeyboard Hook', () => {

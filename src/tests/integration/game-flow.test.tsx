@@ -1,19 +1,19 @@
 import { describe, it, expect, vi } from 'vitest';
 import { fireEvent, waitFor } from '@testing-library/react';
 
-import { useGameStore } from '@/modules/game/store/useGameStore';
-import { GameState } from '@/modules/game/types';
+import { useGameStore } from '@/features/game/store/useGameStore';
+import { GameState } from '@/features/game/types';
 import { render, screen, act } from '../test-utils';
 
-import Board from '@/modules/game/ui/board';
-import Controls from '@/modules/game/ui/controls';
+import Board from '@/features/game/ui/board';
+import Controls from '@/features/game/ui/controls';
 
 // Mock hooks
-vi.mock('@/modules/game/hooks/useKeyboard', () => ({
+vi.mock('@/features/game/hooks/useKeyboard', () => ({
   useKeyboard: vi.fn(),
 }));
 
-vi.mock('@/modules/game/hooks/useLeaderBoard', () => ({
+vi.mock('@/features/game/hooks/useLeaderBoard', () => ({
   useLeaderBoard: vi.fn(() => ({
     leaderboard: [],
     onSaveLeaderboard: vi.fn(),

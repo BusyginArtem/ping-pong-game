@@ -1,10 +1,10 @@
 import { describe, it, expect, vi } from 'vitest';
 import { fireEvent } from '@testing-library/react';
 
-import StartGameModal from '@/modules/game/ui/start-game-modal';
-import { Difficulty } from '@/modules/game/types';
+import StartGameModal from '@/features/game/ui/start-game-modal';
+import { Difficulty } from '@/features/game/types';
 
-import { useGameStore } from '@/modules/game/store/useGameStore';
+import { useGameStore } from '@/features/game/store/useGameStore';
 import { render, screen } from '../test-utils';
 
 describe('StartGameModal Component', () => {

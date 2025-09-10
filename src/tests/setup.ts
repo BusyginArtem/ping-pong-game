@@ -4,7 +4,7 @@ import { cleanup } from '@testing-library/react';
 
 window.scrollTo = vi.fn();
 
-vi.mock('@/modules/game/hooks/useKeyboard', () => ({
+vi.mock('@/features/game/hooks/useKeyboard', () => ({
   useKeyboard: vi.fn(),
 }));
 
